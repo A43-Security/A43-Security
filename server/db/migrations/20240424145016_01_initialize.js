@@ -7,6 +7,7 @@ exports.up = function (knex) {
         .createTable('users', function (table) {
             table.increments('id').primary();
             table.string('username').notNullable();
+            table.string('role').notNullable();
             table.timestamps(true, true);
         });
 };
@@ -16,5 +17,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-    return knex.schema
+    return knex.schema.dropTable("users")
 };
