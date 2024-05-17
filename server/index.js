@@ -1,14 +1,18 @@
-const express = require('express')
-const app = express()
+require('dotenv').config();
+const express = require('express');
 
-import { serveUsers, serveUser, createUser, updateUser, deleteUser } from "./controllers/userControllers";
+const logRoutes = require('./middleware/logRoutes')
 
-const logRoutes = (req, res, next) => {
-    const time = new Date().toLocaleString();
-    console.log(`${req.method}: ${req.originalUrl} - ${time}`);
-    next(); // Passes the request to the next middleware/controller
-};
+const app = express();
 
+const employeeRouter = require('./routers/employeeRouter')
 
-app.use(logRoutes)
-app.listen(process.env.PORT, () => console.log(`listening at http://localhost:${process.env.PORT}`)); 
+app.use(logRoutes);
+app.use(express.json())
+
+app.use('/api/employee', employeeRouter);
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
+});
