@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, StatusBar, KeyboardAvoidingView, ScrollView} from 'react-native';
+import UserContext from '../context / UserContext';
 
 export default function SignInScreen({ navigation }) {
-    const [first, setFirst] = useState("")
-    const [last, setLast] = useState("")
-    const [username, setUsername] = useState("");
-    const [pass, setPass] = useState("");
     const [verifyPass, setVerifyPass] = useState("");
-    const [company, setCompany] = useState("");
-
     const [errors, setErrors] = useState({})
+    const {
+      first, 
+      setFirst,   
+      last,
+      setLast,
+      username, 
+      setUsername, 
+      pass, 
+      setPass, 
+      company, 
+      setCompany} = useContext(UserContext)
 
     const validateForm = () => {
         let errors = {}

@@ -1,21 +1,21 @@
-const knex = require('./knex');
+const knex = require('../knex');
 const Post = require('./Post');
 
-class User {
-    static async create(name) {
-        const query = `
-      INSERT INTO users (name)
-      VALUES (?)
+class Employee {
+    static async create(username, password, firstName, lastName, company) {
+    const query = `
+      INSERT INTO Employee (username, password, firstName, lastName, company)
+      VALUES (?, ?, ?, ?, ?)
       RETURNING *;
     `;
-        const { rows } = await knex.raw(query, [name]);
+        const { rows } = await knex.raw(query, [username, password, firstName, lastName, company]);
         return rows[0];
     }
 
     static async list() { // Get all
-        const query = `
+    const query = `
       SELECT * 
-      FROM users;
+      FROM employee;
     `;
         const { rows } = await knex.raw(query);
         return rows;
@@ -24,31 +24,31 @@ class User {
     static async findById(id) { // Get one
         const query = `
         SELECT *    
-        FROM users
+        FROM employee
         WHERE id=?
     `;
         const { rows } = await knex.raw(query, [id]);
         return rows[0];
     }
 
-    static async findByName(name) { // Get one
+    static async findByName(username) { // Get one
         const query = `
       SELECT * 
-      FROM users
-      WHERE name=?
+      FROM employee
+      WHERE username=?
     `;
         const { rows } = await knex.raw(query, [name]);
         return rows[0];
     }
 
-    static async editName(id, newName) { // Update
+    static async editName(id, newUsername) { // Update
         const query = `
-      UPDATE users
-      SET name=?
+      UPDATE employees
+      SET newUsername=?
       WHERE id=?
       RETURNING *
     `;
-        const { rows } = await knex.raw(query, [newName, id]);
+        const { rows } = await knex.raw(query, [newUsername, id]);
         return rows[0];
     }
 
@@ -57,7 +57,7 @@ class User {
         await Post.deleteAllPostsForFellow(id);
 
         const query = `
-      DELETE FROM users
+      DELETE FROM employee
       WHERE id=?
       RETURNING *
     `
@@ -66,4 +66,4 @@ class User {
     }
 }
 
-module.exports = User;
+module.exports = Employee;

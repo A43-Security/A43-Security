@@ -3,15 +3,15 @@ import { Keyboard, Button, StyleSheet, Text, View, TextInput, StatusBar, Keyboar
 
 
 export default function LogInScreen({ navigation }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [logInUsername, setLogInUsername] = useState("");
+  const [logInPassword, setLogInPassword] = useState("");
   const [errors, setErrors] = useState({})
 
   const validateForm = () => {
     let errors = {}
 
-    if(!username) errors.username = 'Username is required'
-    if(!password) errors.password = 'Password is required'
+    if(!logInUsername) errors.logInUsername = 'Username is required'
+    if(!logInPassword) errors.logInPassword = 'Password is required'
 
     setErrors(errors)
 
@@ -20,9 +20,8 @@ export default function LogInScreen({ navigation }) {
 
   const handleSubmit = () => {
     if(validateForm()){
-        
-        setUsername("")
-        setPassword("")
+        setLogInUsername("")
+        setLogInPassword("")
         setErrors({})
     }
   }
@@ -34,14 +33,14 @@ export default function LogInScreen({ navigation }) {
       <Text style={styles.heading}>A43 Security</Text>
       <View style={styles.form}>
       <Text style={styles.label}>Username</Text>
-      <TextInput placeholder='Enter your username' style={styles.input} value={username} onChangeText={setUsername}/>
+      <TextInput placeholder='Enter your username' style={styles.input} value={logInUsername} onChangeText={setLogInUsername}/>
       {
-        errors.username ? <Text style={styles.errorText}>{errors.username}</Text> : null
+        errors.logInUsername ? <Text style={styles.errorText}>{errors.logInUsername}</Text> : null
       }
       <Text style={styles.label}>Password</Text>
-      <TextInput placeholder='Enter you password' style={styles.input} secureTextEntry value={password} onChangeText={setPassword}></TextInput>
+      <TextInput placeholder='Enter you password' style={styles.input} secureTextEntry value={logInPassword} onChangeText={setLogInPassword}></TextInput>
       {
-        errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null
+        errors.logInPassword ? <Text style={styles.errorText}>{errors.logInPassword}</Text> : null
       }
       <View style={styles.buttons}>
       <Button title='Log In'
