@@ -13,8 +13,8 @@ exports.findManagerById = async (req, res) => {
 }
 
 exports.createManager = async (req, res) => {
-    const { username, password, firstName, lastName, company } = req.body;
-    const manager = Managers.createManager(username, password, firstName, lastName, company);
+    const { username, password, firstName, lastName, company, imageUrl} = req.body;
+    const manager = Managers.createManager(username, password, firstName, lastName, company, imageUrl);
 
     res.send(manager);
 }

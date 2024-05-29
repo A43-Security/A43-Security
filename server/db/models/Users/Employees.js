@@ -2,13 +2,13 @@ const knex = require('../knex');
 const Post = require('./Post');
 
 class Employee {
-    static async create(username, password, firstName, lastName, company) {
+    static async create(username, password, firstName, lastName, company, imageUrl) {
     const query = `
-      INSERT INTO Employee (username, password, firstName, lastName, company)
+      INSERT INTO Employee (username, password, firstName, lastName, company, imageUrl)
       VALUES (?, ?, ?, ?, ?)
       RETURNING *;
     `;
-        const { rows } = await knex.raw(query, [username, password, firstName, lastName, company]);
+        const { rows } = await knex.raw(query, [username, password, firstName, lastName, company, imageUrl]);
         return rows[0];
     }
 

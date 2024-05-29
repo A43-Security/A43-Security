@@ -1,12 +1,13 @@
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import * as ImagePicker from "expo-image-picker";
 import placeHolder from '../assets/placeholder.png';
-import UserContext from '../context / UserContext';
-import { useContext } from 'react'
+import UserContext from '../context/UserContext';
 
-export default function PhotoIdentificationScreen() {
+
+export default function PhotoIdentificationScreen({navigation}) {
   const [imageUri, setImageUri] = useState(null);
+  const { imageUrl, setImageUrl} = useContext(UserContext)
   
 
   const uploadImage = async (mode) => {
@@ -26,7 +27,7 @@ export default function PhotoIdentificationScreen() {
         });
       }
 
-      if (!result.cancelled) {
+      if (!result.canceled) {
         console.log(result.assets[0].uri)
         setImageUri(result.assets[0].uri);
       }
@@ -34,6 +35,13 @@ export default function PhotoIdentificationScreen() {
       alert("Error uploading image: " + error);
     }
   };
+
+  const handleSubmit = () => {
+    setImageUrl(imageUri)
+    console.log(imageUrl)
+    navigation.navigate('Home Page')
+    
+  }
 
   return (
     <View style={styles.container}>
@@ -53,6 +61,12 @@ export default function PhotoIdentificationScreen() {
             title='Use from gallery'
             onPress={() => uploadImage('gallery')}
             style={styles.button}
+          />
+        </View>
+        <View style={{alignItems: "center"}}>
+          <Button 
+          title="Submit"
+          onPress={() => handleSubmit()}
           />
         </View>
       </View>

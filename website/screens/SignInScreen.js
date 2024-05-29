@@ -1,9 +1,13 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, StatusBar, KeyboardAvoidingView, ScrollView} from 'react-native';
-import UserContext from '../context / UserContext';
+import { createEmployee } from '../adapter/employeeAdapter'
+import UserContext from '../context/UserContext';
+import {Picker} from '@react-native-picker/picker';
 
 export default function SignInScreen({ navigation }) {
     const [verifyPass, setVerifyPass] = useState("");
+    const [selectedCompany, setSelectedCompany] = useState("");
+    
     const [errors, setErrors] = useState({})
     const {
       first, 
@@ -14,40 +18,66 @@ export default function SignInScreen({ navigation }) {
       setUsername, 
       pass, 
       setPass, 
-      company, 
-      setCompany} = useContext(UserContext)
+      firstTyped,
+      setFirstTyped,
+      lastTyped,
+      setLastTyped,
+      usernameTyped,
+      setUsernameTyped,
+      passTyped,
+      setPassTyped,
+      currentUser,
+      setCurrentUser,
+     
+      } = useContext(UserContext)
+
+    
 
     const validateForm = () => {
         let errors = {}
         
-        if(pass !== verifyPass) {
+        if(passTyped !== verifyPass) {
             errors.pass = "Your passwords don't match"
             errors.verifyPass = "Your passwords don't match"
         }
-        if(!first) errors.first = 'First name is required'
-        if(!last) errors.last = 'Last name is required'
-        if(!username) errors.username = 'Username is required'
-        if(!pass) errors.pass = 'Password is required'
+        if(!firstTyped) errors.first = 'First name is required'
+        if(!lastTyped) errors.last = 'Last name is required'
+        if(!usernameTyped) errors.username = 'Username is required'
+        if(!passTyped) errors.pass = 'Password is required'
         if(!verifyPass) errors.verifyPass = 'Please re-enter your password'
-        if(!company) errors.company = 'Company is required'
-     
+
         setErrors(errors)
     
         return Object.keys(errors).length === 0
       }
 
       const handleSubmit = () => {
+
+        // const [user, error] = await createEmployee({ firstName:first, lastName:last, username, password});
+
+        // if (error) return setErrors(error.message);
+
+        // setCurrentUser(user);
+        // console.log(currentUser)
+
+        setFirst(firstTyped)
+        setLast(lastTyped)
+        setUsername(usernameTyped)
+        setPass(passTyped)
+        
+      
+
         if(validateForm()){
-        setFirst("")
-        setLast("")
-        setUsername("")
-        setPass("")
+        setFirstTyped("")
+        setLastTyped("")
+        setUsernameTyped("")
+        setPassTyped("")
         setVerifyPass("")
-        setCompany("")
         setErrors({})
 
-        navigation.navigate('Photo Identification')
+        navigation.navigate('Company')
         }
+
       }
 
     return(
@@ -61,35 +91,32 @@ export default function SignInScreen({ navigation }) {
       <View style={styles.form}>
 
       <Text style={styles.label}>First name</Text>
-      <TextInput placeholder='Enter your first name' style={styles.input}  value={first} onChangeText={setFirst} />
+      <TextInput placeholder='Enter your first name' style={styles.input}  value={firstTyped} onChangeText={setFirstTyped} />
       {
-        errors.first ? <Text style={styles.errorText}>{errors.first} </Text> : null
+        errors.firstTyped ? <Text style={styles.errorText}>{errors.firstTyped} </Text> : null
       }
       <Text style={styles.label}>Last Name</Text>
-      <TextInput placeholder='Enter your last name' style={styles.input}  value={last} onChangeText={setLast}></TextInput>
+      <TextInput placeholder='Enter your last name' style={styles.input}  value={lastTyped} onChangeText={setLastTyped}></TextInput>
       {
-        errors.last ? <Text style={styles.errorText}>{errors.last}</Text> : null
+        errors.lastTyped ? <Text style={styles.errorText}>{errors.lastTyped}</Text> : null
       }
       <Text style={styles.label}> Create a username</Text>
-      <TextInput placeholder='Create a username ' style={styles.input}  value={username} onChangeText={setUsername}></TextInput>
+      <TextInput placeholder='Create a username ' style={styles.input}  value={usernameTyped} onChangeText={setUsernameTyped}></TextInput>
       {
-        errors.username ? <Text style={styles.errorText}>{errors.username}</Text> : null
+        errors.usernameTyped ? <Text style={styles.errorText}>{errors.usernameTyped}</Text> : null
       }
       <Text style={styles.label}>Create a password</Text>
-      <TextInput placeholder='Enter a password' style={styles.input} secureTextEntry  value={pass} onChangeText={setPass}></TextInput>
+      <TextInput placeholder='Enter a password' style={styles.input} secureTextEntry  value={passTyped} onChangeText={setPassTyped}></TextInput>
       {
-        errors.pass ? <Text style={styles.errorText}>{errors.pass}</Text> : null
+        errors.passTyped ? <Text style={styles.errorText}>{errors.passTyped}</Text> : null
       }
       <Text style={styles.label}>Verify password</Text>
       <TextInput placeholder='Enter password again' style={styles.input} secureTextEntry  value={verifyPass} onChangeText={setVerifyPass}></TextInput>
       {
         errors.verifyPass ? <Text style={styles.errorText}>{errors.verifyPass}</Text> : null
       }
-      <Text style={styles.label}>Company</Text>
-      <TextInput placeholder='Enter your company name' style={styles.input}  value={company} onChangeText={setCompany}></TextInput>
-      {
-        errors.company ? <Text style={styles.errorText}>{errors.company}</Text> : null
-      }
+
+
       <Button 
       title='Submit' 
       onPress={() => handleSubmit()} />

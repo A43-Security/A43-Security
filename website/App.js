@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LogInScreen from './screens/LogInScreen';
 import SignInScreen from './screens/SignInScreen';
 import PhotoIdentificationScreen from './screens/PhotoIdentificationScreen';
-import UserProvider from './context /UserProvider';
+import UserProvider from './context/UserProvider';
+import HomeScreen from './screens/HomePageScreen';
+import CompanyScreen from './screens/CompanyScreen'
 
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -15,7 +17,9 @@ export default function App() {
         <Stack.Screen name="Log In Page" component={LogInScreen} />
         <Stack.Screen name="Sign In Page" component={SignInScreen} />
         <Stack.Screen name="Photo Identification" component={PhotoIdentificationScreen} />
-      </Stack.Navigator>
+        <Stack.Screen name="Home Page" component={HomeScreen} />
+        <Stack.Screen name="Company" component={CompanyScreen} />
+      </Stack.Navigator> 
     </NavigationContainer>
     </UserProvider>
   )

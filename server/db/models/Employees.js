@@ -7,15 +7,16 @@ class Employees {
     static async createEmployee(username, password, firstName, lastName, company) {
         const passwordHash = await authUtils.hashPassword(password);
         const companyId = await Companies.getCompanyId(company);
+     
         // console.log(companyId);
         // const managerId = await Managers.findManagerByName(managerFullName);
 
         const query = `
-      INSERT INTO employees (username, password_hash, firstName, lastName, companie_id, manager_id)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO employees (username, password_hash, firstName, lastName, companie_id, manager_id, imageUrl)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
       RETURNING *;
     `;
-        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, companyId, managerId]);
+        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, companyId, managerId, imageUrl]);
         return rows[0];
     }
 
