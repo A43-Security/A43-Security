@@ -1,4 +1,4 @@
-const knex = require('knex');
+const knex = require('../knex');
 const Companies = require('../models/Companies')
 const Managers = require('../models/Managers')
 const authUtils = require('../../utils/auth-utils')
