@@ -7,9 +7,10 @@ exports.up = function (knex) {
         table.increments();
         table.string('username').notNullable().unique();
         table.string('password_hash').notNullable();
-        table.string('firstName').notNullable();
-        table.string('lastName').notNullable();
-        table.string('imageUrl').notNullable()
+        table.string('firstname').notNullable();
+        table.string('lastname').notNullable();
+        table.boolean('ismanager').notNullable();
+        table.string('imageurl').notNullable()
     })
 };
 

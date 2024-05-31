@@ -1,50 +1,51 @@
 const knex = require('../knex');
 const Companies = require('../models/Companies')
-const Managers = require('../models/Managers')
 const authUtils = require('../../utils/auth-utils')
 
 class Employees {
-    static async createEmployee(username, password, firstName, lastName, company) {
+    static async createEmployee(username, password, firstName, lastName, ismanager = "FALSE", imageurl = 'default-placeholder', company) {
+
         const passwordHash = await authUtils.hashPassword(password);
         const companyId = await Companies.getCompanyId(company);
 
-        // console.log(companyId);
-        // const managerId = await Managers.findManagerByName(managerFullName);
+        if (!companyId) {
+            throw new Error('Company not found');
+        }
 
         const query = `
-      INSERT INTO employees (username, password_hash, firstName, lastName, companie_id, manager_id, imageUrl)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-      RETURNING *;
-    `;
-        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, companyId, managerId, imageUrl]);
+            INSERT INTO employees (username, password_hash, firstname, lastname, ismanager, imageurl, companie_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+        `;
+        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, ismanager, imageurl, companyId]);
         return rows[0];
     }
 
+
     static async listAllEmployees() { // Get all
         const query = `
-      SELECT * 
-      FROM employees;
-    `;
+            SELECT * 
+            FROM employees;
+        `;
         const { rows } = await knex.raw(query);
         return rows[0];
     }
 
     static async findEmployeeById(id) { // Get one
         const query = `
-        SELECT *    
-        FROM employees
-        WHERE id=?
-    `;
+            SELECT *    
+            FROM employees
+            WHERE id = ?;
+        `;
         const { rows } = await knex.raw(query, [id]);
         return rows[0];
     }
 
     static async findEmployeeByFirstName(name) { // Get one
         const query = `
-      SELECT * 
-      FROM employees
-      WHERE firstName=?
-    `;
+            SELECT * 
+            FROM employees
+            WHERE firstname = ?;
+        `;
         const { rows } = await knex.raw(query, [name]);
         return rows[0];
     }

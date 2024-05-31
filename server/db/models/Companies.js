@@ -6,7 +6,7 @@ class Companies {
         const query = `SELECT * FROM companies;`
         const { rows } = await knex.raw(query)
 
-        return rows[0];
+        return rows[0].id;
     }
 
     static async addCompany(name) {
@@ -20,7 +20,7 @@ class Companies {
         const query = `SELECT id FROM companies WHERE name = ?;`
         const { rows } = await knex.raw(query, [name])
 
-        return rows[0]
+        return rows[0]?.id
     }
 
     static async getCompanyById(id) {
