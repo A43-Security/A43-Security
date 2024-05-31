@@ -7,7 +7,7 @@ class Employees {
     static async createEmployee(username, password, firstName, lastName, company) {
         const passwordHash = await authUtils.hashPassword(password);
         const companyId = await Companies.getCompanyId(company);
-     
+
         // console.log(companyId);
         // const managerId = await Managers.findManagerByName(managerFullName);
 

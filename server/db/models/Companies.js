@@ -17,7 +17,7 @@ class Companies {
     }
 
     static async getCompanyId(name) {
-        const query = `SELECT id FROM companies WHERE name = ? RETURNING*`
+        const query = `SELECT id FROM companies WHERE name = ?;`
         const { rows } = await knex.raw(query, [name])
 
         return rows[0]
