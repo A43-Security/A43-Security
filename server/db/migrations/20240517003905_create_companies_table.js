@@ -1,4 +1,4 @@
-const knex = require("../../../../TenantVoice/server/db/knex");
+const knex = require("../knex");
 
 /**
  * @param { import("knex").Knex } knex

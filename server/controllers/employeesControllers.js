@@ -18,7 +18,8 @@ exports.findEmployeeById = async (req, res) => {
 
 exports.createEmployee = async (req, res) => {
     const { username, password, firstname, lastname, ismanager, imageurl, company } = req.body;
+    console.log(firstname, lastname)
     const employee = await Employees.createEmployee(username, password, firstname, lastname, ismanager, imageurl, company);
-
+    
     res.send(employee);
 }

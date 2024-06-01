@@ -8,12 +8,13 @@ const UserProvider = ({children}) => {
     const [passTyped, setPassTyped] = useState("");
     const [company, setCompany] = useState("");
     const [currentUser, setCurrentUser] = useState()
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState()
     const [imageUrl, setImageUrl] = useState("")
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
     const [username, setUsername] = useState("");
     const [pass, setPass] = useState("");
+    const [isManager, setIsManager] = useState("")
 
     let contextValues = { 
         first,
@@ -39,7 +40,9 @@ const UserProvider = ({children}) => {
         userInfo,
         setUserInfo,
         imageUrl,
-        setImageUrl
+        setImageUrl,
+        isManager,
+        setIsManager
      }
 
      

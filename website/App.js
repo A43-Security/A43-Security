@@ -7,6 +7,7 @@ import PhotoIdentificationScreen from './screens/PhotoIdentificationScreen';
 import UserProvider from './context/UserProvider';
 import HomeScreen from './screens/HomePageScreen';
 import CompanyScreen from './screens/CompanyScreen'
+import ChoicePage from './screens/ChoicePage'
 
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Photo Identification" component={PhotoIdentificationScreen} />
         <Stack.Screen name="Home Page" component={HomeScreen} />
         <Stack.Screen name="Company" component={CompanyScreen} />
+        <Stack.Screen name="Choice Page" component={ChoicePage} />
       </Stack.Navigator> 
     </NavigationContainer>
     </UserProvider>

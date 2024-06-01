@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@react-native-picker/picker": "^2.7.6"
+    "@react-native-picker/picker": "^2.7.6",
+    "axios": "^1.7.2",
+    "react-native-dropdown-select-list": "^2.0.5"
   }
 }

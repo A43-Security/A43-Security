@@ -3,11 +3,24 @@ import { useState, useContext } from 'react';
 import * as ImagePicker from "expo-image-picker";
 import placeHolder from '../assets/placeholder.png';
 import UserContext from '../context/UserContext';
+import axios from 'axios';
+import { createEmployee } from '../adapter/employeeAdapter';
 
 
 export default function PhotoIdentificationScreen({navigation}) {
   const [imageUri, setImageUri] = useState(null);
-  const { imageUrl, setImageUrl} = useContext(UserContext)
+  const { 
+    imageUrl,
+    setImageUrl,
+    first, 
+    last,
+    username, 
+    pass, 
+    company,
+    isManager,
+    userInfo,
+    setUserInfo
+  } = useContext(UserContext)
   
 
   const uploadImage = async (mode) => {
@@ -36,10 +49,26 @@ export default function PhotoIdentificationScreen({navigation}) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     setImageUrl(imageUri)
-    console.log(imageUrl)
-    navigation.navigate('Home Page')
+    
+    try {
+      const user = await createEmployee({
+        username: username,
+        password: pass,
+        firstname: first,
+        lastname: last,
+        company: company,
+        imageUrl: imageUri,
+        ismanager: isManager,
+      });
+
+      console.log("Employee created successfully:", user);
+
+      navigation.navigate('Home Page');
+    } catch (error) {
+      console.error("Error creating employee:", error);
+    }
     
   }
 

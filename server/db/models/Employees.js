@@ -14,12 +14,12 @@ class Employees {
 
         const query = `
             INSERT INTO employees (username, password_hash, firstname, lastname, ismanager, imageurl, companie_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            RETURNING *;
         `;
         const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, ismanager, imageurl, companyId]);
         return rows[0];
     }
-
 
     static async listAllEmployees() { // Get all
         const query = `
