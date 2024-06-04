@@ -18,5 +18,5 @@ app.use('/api/employee', employeeRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Server running at http://10.0.13.254:${port}/`);
+    console.log(`Server running at http://10.0.12.127:${port}/`);
 });
