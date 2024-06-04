@@ -23,9 +23,13 @@ export default function HomeScreen({ navigation }) {
         setPassTyped,
         currentUser,
         setCurrentUser,
-        imageUrl
+        imageUrl,
+        isManager
         } = useContext(UserContext)
 
+        const handleClick = () => {
+            navigation.navigate("")
+        }
 
     return (
         <View style={styles.container}>
@@ -38,6 +42,12 @@ export default function HomeScreen({ navigation }) {
             title='click to tap'
             style={styles.button}
             />
+            {isManager && 
+              <Button 
+               title='Empolyees'
+               onPress={handleClick}
+              />
+            }
         </View>
     )
 }

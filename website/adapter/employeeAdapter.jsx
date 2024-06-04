@@ -1,18 +1,17 @@
 import axios from 'axios';
 import { getPostOptions } from "../utils";
 
-const baseUrl = "http://192.168.1.203:3000/api/employee";
+const baseUrl = "http://10.0.13.254:3000/api/employee";
 
 export const createEmployee = async ({
   username,
   password,
   firstname,
   lastname,
-  company,
+  ismanager,
   imageUrl,
-  ismanager
+  company
 }) => {
-  console.log(username, password, firstname, lastname, company, ismanager)
   try {
 
     const postOptions = {
@@ -27,9 +26,9 @@ export const createEmployee = async ({
       password,
       firstname,
       lastname, 
-      company,
+      ismanager,
       imageUrl,
-      ismanager
+      company
     }, postOptions);
 
     return response?.data; 

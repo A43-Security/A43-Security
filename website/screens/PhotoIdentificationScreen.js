@@ -41,7 +41,6 @@ export default function PhotoIdentificationScreen({navigation}) {
       }
 
       if (!result.canceled) {
-        console.log(result.assets[0].uri)
         setImageUri(result.assets[0].uri);
       }
     } catch (error) {
@@ -58,9 +57,9 @@ export default function PhotoIdentificationScreen({navigation}) {
         password: pass,
         firstname: first,
         lastname: last,
-        company: company,
-        imageUrl: imageUri,
         ismanager: isManager,
+        imageUrl: imageUri,
+        company: company,
       });
 
       console.log("Employee created successfully:", user);
