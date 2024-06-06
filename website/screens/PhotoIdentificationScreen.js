@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import * as ImagePicker from "expo-image-picker";
 import placeHolder from '../assets/placeholder.png';
 import UserContext from '../context/UserContext';
@@ -21,6 +21,10 @@ export default function PhotoIdentificationScreen({navigation}) {
     userInfo,
     setUserInfo
   } = useContext(UserContext)
+
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
   
 
   const uploadImage = async (mode) => {
@@ -63,7 +67,7 @@ export default function PhotoIdentificationScreen({navigation}) {
       });
 
       console.log("Employee created successfully:", user);
-
+      setUserInfo(user)
       navigation.navigate('Home Page');
     } catch (error) {
       console.error("Error creating employee:", error);

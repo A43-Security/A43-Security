@@ -24,20 +24,23 @@ export default function HomeScreen({ navigation }) {
         currentUser,
         setCurrentUser,
         imageUrl,
-        isManager
+        isManager,
+        userInfo,
+        setUserInfo,
+        company
         } = useContext(UserContext)
 
         const handleClick = () => {
-            navigation.navigate("")
+            navigation.navigate("Employee Table")
         }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>{username}</Text>
+            <Text style={styles.heading}>{company}</Text>
             <Image
              source={{uri : imageUrl}}
              style={styles.photo} />
-            <Text style={styles.text}>{first} {last}</Text> 
+            <Text style={styles.text}>{userInfo.firstname} {userInfo.lastname}</Text> 
             <Button 
             title='click to tap'
             style={styles.button}
