@@ -6,14 +6,14 @@ const Employees = require('../db/models/Employees');
 // and sends back the user object.
 exports.loginEmployee = async (req, res) => {
     const { username, password } = req.body; // the req.body value is provided by the client
-
+    console.log(username, password)
     const user = await Employees.findByUsername(username);
     if (!user) return res.sendStatus(404);
 
     const isPasswordValid = await user.isValidPassword(password);
     if (!isPasswordValid) return res.sendStatus(401);
-
     req.session.userId = user.id;
+    console.log(user)
     res.send(user);
 };
 

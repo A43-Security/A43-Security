@@ -3,7 +3,6 @@ import { useState, useContext, useEffect } from 'react';
 import * as ImagePicker from "expo-image-picker";
 import placeHolder from '../assets/placeholder.png';
 import UserContext from '../context/UserContext';
-import axios from 'axios';
 import { createEmployee } from '../adapter/employeeAdapter';
 
 
@@ -46,15 +45,16 @@ export default function PhotoIdentificationScreen({navigation}) {
 
       if (!result.canceled) {
         setImageUri(result.assets[0].uri);
+        console.log(imageUri)
       }
     } catch (error) {
       alert("Error uploading image: " + error);
     }
   };
 
+
   const handleSubmit = async() => {
-    setImageUrl(imageUri)
-    
+   
     try {
       const user = await createEmployee({
         username: username,
@@ -62,13 +62,13 @@ export default function PhotoIdentificationScreen({navigation}) {
         firstname: first,
         lastname: last,
         ismanager: isManager,
-        imageUrl: imageUri,
+        imageurl: imageUri,
         company: company,
       });
 
       console.log("Employee created successfully:", user);
       setUserInfo(user)
-      navigation.navigate('Home Page');
+      navigation.navigate('Log In Page');
     } catch (error) {
       console.error("Error creating employee:", error);
     }

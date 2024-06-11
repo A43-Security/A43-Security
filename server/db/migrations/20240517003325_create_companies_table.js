@@ -6,7 +6,7 @@ const knex = require("../knex");
  */
 exports.up = function (knex) {
     return knex.schema.createTable('companies', (table) => {
-        table.increments();
+        table.increments('id').primary();
         table.string('name').notNullable();
     })
 };

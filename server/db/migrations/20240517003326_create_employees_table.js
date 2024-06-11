@@ -11,6 +11,10 @@ exports.up = function (knex) {
         table.string('lastname').notNullable();
         table.boolean('ismanager').notNullable();
         table.string('imageurl').notNullable()
+        table.string('company').notNullable()
+        table.integer('company_id').unsigned().notNullable();
+        table.foreign('company_id').references('companies.id').onDelete('CASCADE');
+        table.timestamps(true, true);
     })
 };
 

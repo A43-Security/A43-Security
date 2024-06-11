@@ -5,13 +5,14 @@ const authUtils = require('../../utils/auth-utils')
 class Employees {
     #passwordHash = null
 
-    constructor({ username, password, firstname, lastname, ismanager, imageurl, company }) {
+    constructor({ username, password_hash, firstname, lastname, ismanager, imageurl, company_id, company}) {
         this.username = username;
-        this.#passwordHash = password;
+        this.#passwordHash = password_hash;
         this.firstname = firstname;
         this.lastname = lastname;
         this.ismanager = ismanager;
         this.imageurl = imageurl;
+        this.company_id = company_id;
         this.company = company;
     }
 
@@ -21,20 +22,20 @@ class Employees {
 
     static async createEmployee(username, password, firstName, lastName, ismanager = "FALSE", imageurl = 'default-placeholder', company) {
         const passwordHash = await authUtils.hashPassword(password);
-        const companyId = await Companies.getCompanyId(company);
-
-        if (!companyId) {
+        const company_id = await Companies.getCompanyId(company);
+        console.log("model: " + imageurl)
+        if (!company_id) {
             throw new Error('Company not found');
         }
-
         const query = `
-            INSERT INTO employees (username, password_hash, firstname, lastname, ismanager, imageurl, companie_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO employees (username, password_hash, firstname, lastname, ismanager, imageurl, company_id, company)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             RETURNING *;
         `;
-        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, ismanager, imageurl, companyId]);
+        const { rows } = await knex.raw(query, [username, passwordHash, firstName, lastName, ismanager, imageurl, company_id, company]);
         return new Employees(rows[0]);
     }
+
 
     static async listAllEmployees() { // Get all
         const query = `
@@ -68,20 +69,33 @@ class Employees {
     }
 
     static async getEmployeeByCompany(company) {
-        const companyId = Companies.getCompanyId(company)
+        console.log("company: " + company)
+
+        const company_id = await Companies.getCompanyId(company)
+        console.log("company Id: " + company_id)
         const query = `
         SELECT * FROM employees
-        WHERE companie_id = ?
+        WHERE company_id = ?
         `
-        const { rows } = await knex.raw(query, [companyId])
+        const { rows } = await knex.raw(query, [company_id])
         return rows;
     }
 
     static async findByUsername(username) {
-        const query = `SELECT * FROM users WHERE username = ?`;
-        const { rows } = await knex.raw(query, [username]);
-        const user = rows[0];
-        return user ? new Employees(user) : null;
+        const query = `
+        SELECT employees.*, companies.name AS company_name 
+        FROM employees 
+        JOIN companies ON employees.company_id = companies.id 
+        WHERE employees.username = ?
+    `;
+    const { rows } = await knex.raw(query, [username]);
+    const user = rows[0];
+    if (user) {
+        user.company = user.company_name; // Add company name to the user object
+        delete user.company_name; // Clean up the object if you want to keep the property names consistent
+        return new Employees(user);
+    }
+    return null;
     }
 
     static async deleteEmployeeById(id) {

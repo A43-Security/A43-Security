@@ -36,16 +36,16 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>{company}</Text>
+            <Text style={styles.heading}>{userInfo?.company}</Text>
             <Image
-             source={{uri : imageUrl}}
+             source={{uri : userInfo?.imageurl}}
              style={styles.photo} />
-            <Text style={styles.text}>{userInfo.firstname} {userInfo.lastname}</Text> 
+            <Text style={styles.text}>{userInfo?.firstname} {userInfo?.lastname}</Text> 
             <Button 
             title='click to tap'
             style={styles.button}
             />
-            {isManager && 
+            {userInfo?.ismanager && 
               <Button 
                title='Empolyees'
                onPress={handleClick}

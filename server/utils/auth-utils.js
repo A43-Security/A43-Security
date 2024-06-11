@@ -16,7 +16,7 @@ const hashPassword = async (password, saltRounds = 8) => bcrypt
  */
 const isValidPassword = async (password, hash) => bcrypt
     .compare(password, hash)
-    .catch((err) => console.error(err.message));
+    .catch((err) => console.error(password, hash));
 
 const isAuthorized = (userId, session) => {
     if (!userId || !session || !session.userId) return false;

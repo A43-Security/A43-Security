@@ -16,9 +16,27 @@ exports.findEmployeeById = async (req, res) => {
     }
 }
 
+exports.deleteEmployeeById = async (req, res) => {
+    const { id } = req.body;
+    console.log( id )
+    const result =  await Employees.deleteEmployeeById(id)
+     console.log(result.message)
+    res.send(result.message)
+}
+
+exports.findEmployeeByCompany = async (req, res) => {
+    const { company } = req.body
+    const employees = await Employees.getEmployeeByCompany(company)
+    if(!employees) {
+        res.sendStatus(404)
+    } else {
+        res.send(employees)
+    }
+}
+
 exports.createEmployee = async (req, res) => {
     const { username, password, firstname, lastname, ismanager, imageurl, company } = req.body;
-    console.log(firstname, lastname)
+    console.log("controller: " + imageurl)
     const employee = await Employees.createEmployee(username, password, firstname, lastname, ismanager, imageurl, company);
     
     res.send(employee);

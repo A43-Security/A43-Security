@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Keyboard, Button, StyleSheet, Text, View, TextInput, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback} from 'react-native';
-
+import { loginUser } from '../adapter/authAdapter'
+import UserContext from '../context/UserContext';
 
 export default function LogInScreen({ navigation }) {
   const [logInUsername, setLogInUsername] = useState("");
   const [logInPassword, setLogInPassword] = useState("");
   const [errors, setErrors] = useState({})
+
+  const { userInfo, setUserInfo } = useContext(UserContext)
 
   const validateForm = () => {
     let errors = {}
@@ -18,11 +21,27 @@ export default function LogInScreen({ navigation }) {
     return Object.keys(errors).length === 0
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if(validateForm()){
+         try{
+          const user = await loginUser({
+            username: logInUsername,
+            password: logInPassword,
+          });
+        
+        console.log("Employee logged in successfully:", user);
+        setUserInfo(user)
+
         setLogInUsername("")
         setLogInPassword("")
         setErrors({})
+
+        
+        navigation.navigate('Home Page');
+
+         } catch(error) {
+          console.error("Error loggin user", error);
+         }      
     }
   }
 
