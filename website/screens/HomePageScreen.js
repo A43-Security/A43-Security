@@ -1,42 +1,49 @@
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { useContext } from 'react';
 import UserContext from '../context/UserContext';
-import placeHolder from '../assets/placeholder.png';
 
 export default function HomeScreen({ navigation }) {
-    const {
-        first, 
-        setFirst,   
-        last,
-        setLast,
-        username, 
-        setUsername, 
-        pass, 
-        setPass, 
-        firstTyped,
-        setFirstTyped,
-        lastTyped,
-        setLastTyped,
-        usernameTyped,
-        setUsernameTyped,
-        passTyped,
-        setPassTyped,
-        currentUser,
-        setCurrentUser,
-        imageUrl,
-        isManager,
-        userInfo,
-        setUserInfo,
-        company
-        } = useContext(UserContext)
+    const { userInfo } = useContext(UserContext)
 
-        const handleClick = () => {
+        const handleManagerClick = () => {
             navigation.navigate("Employee Table")
+        }
+
+        const handleCompaniesClick = () => {
+            navigation.navigate("Company Info")
+        }
+
+        const handleMorningLogsClick = () => {
+           navigation.navigate("Morning Logs")
+        }
+
+        const handleTapClick = () => {
+           navigation.navigate("Tap Screen")
         }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>{userInfo?.company}</Text>
+          {userInfo?.username === "Security123" || userInfo?.username === "Security456" 
+          ? ( 
+           <>
+              <Button 
+               title='Companies'
+               onPress={handleCompaniesClick}
+               />
+
+             <Button 
+               title='Morning Logs'
+               onPress={handleMorningLogsClick}
+              />
+
+              <Button
+               title="Start Tap"
+               onPress={handleTapClick}
+               />
+          </>
+          ) : (
+            <>
+           <Text style={styles.heading}>{userInfo?.company}</Text>
             <Image
              source={{uri : userInfo?.imageurl}}
              style={styles.photo} />
@@ -48,9 +55,13 @@ export default function HomeScreen({ navigation }) {
             {userInfo?.ismanager && 
               <Button 
                title='Empolyees'
-               onPress={handleClick}
+               onPress={handleManagerClick}
               />
-            }
+            } 
+            </>
+            )
+        }
+            
         </View>
     )
 }

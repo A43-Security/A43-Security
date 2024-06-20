@@ -9,6 +9,9 @@ import HomeScreen from './screens/HomePageScreen';
 import CompanyScreen from './screens/CompanyScreen';
 import ChoicePage from './screens/ChoicePage';
 import EmployeeTablePage from './screens/employeeTablePage'
+import AllCompanyInfoScreen from './screens/AllCompanyInfoScreen';
+import TapScreen from './screens/TapScreen';
+import MorningLogsScreen from './screens/MorningLogsScreen'
 
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -23,6 +26,9 @@ export default function App() {
         <Stack.Screen name="Company" component={CompanyScreen} />
         <Stack.Screen name="Choice Page" component={ChoicePage} />
         <Stack.Screen name="Employee Table" component={EmployeeTablePage} />
+        <Stack.Screen name="Company Info" component={AllCompanyInfoScreen} />
+        <Stack.Screen name="Tap Screen" component={TapScreen} />
+        <Stack.Screen name="Morning Logs" component={MorningLogsScreen} />
       </Stack.Navigator> 
     </NavigationContainer>
     </UserProvider>

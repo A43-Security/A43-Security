@@ -10,6 +10,8 @@ exports.seed = async (knex) => {
     .then(function () {
       // Inserts seed entries
       return knex('companies').insert([
+        { name: 'Management' },
+        { name: 'House Keeping' },
         { name: 'Aerie' },
         { name: 'Aeropostale' },
         { name: 'Against All odds' },
@@ -91,8 +93,6 @@ exports.seed = async (knex) => {
         { name: 'Royal Med Spa' },
         { name: 'Victoria Nail' },
         { name: 'Vista Eye Care' },
-        { name: 'Management' },
-        { name: 'House Keeping' },
       ]);
     });
 };

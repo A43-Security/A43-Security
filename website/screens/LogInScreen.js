@@ -28,7 +28,7 @@ export default function LogInScreen({ navigation }) {
             username: logInUsername,
             password: logInPassword,
           });
-        
+      
         console.log("Employee logged in successfully:", user);
         setUserInfo(user)
 

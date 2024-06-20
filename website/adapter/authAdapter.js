@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "http://192.168.1.203:3000/api/login";
+const baseUrl = "http://10.0.13.254:3000/api/login";
 
 
 export const loginUser = async ({
