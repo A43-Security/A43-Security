@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
         }
 
         const handleTapClick = () => {
-           navigation.navigate("Tap Screen")
+           navigation.navigate("Employee Tap Screen")
         }
 
     return (
@@ -35,11 +35,6 @@ export default function HomeScreen({ navigation }) {
                title='Morning Logs'
                onPress={handleMorningLogsClick}
               />
-
-              <Button
-               title="Start Tap"
-               onPress={handleTapClick}
-               />
           </>
           ) : (
             <>
@@ -47,11 +42,15 @@ export default function HomeScreen({ navigation }) {
             <Image
              source={{uri : userInfo?.imageurl}}
              style={styles.photo} />
+
             <Text style={styles.text}>{userInfo?.firstname} {userInfo?.lastname}</Text> 
+
             <Button 
             title='click to tap'
             style={styles.button}
+            onPress={handleTapClick}
             />
+            
             {userInfo?.ismanager && 
               <Button 
                title='Empolyees'

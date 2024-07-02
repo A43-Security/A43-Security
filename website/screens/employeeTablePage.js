@@ -18,7 +18,7 @@ export default function EployeeTableScreen({ navigation }) {
           }
         };
     
-        fetchAllEmployees();
+         fetchAllEmployees();
       }, [userInfo.company]);
      
       const handleDelete = async (id) => {
